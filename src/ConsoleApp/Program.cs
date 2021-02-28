@@ -61,8 +61,9 @@ namespace ConsoleApp
             set.Add(new List<int>() { 2, 1, 3 });
 
             var list = new int[] {
-                -1,0,1,2,-1,-4
+                -1,0,1,63, 34, 7, 8, 2,-1,-4
             };
+            Array.Sort(list);
             var result = ThreeSum(list);
             Console.WriteLine(PairSumSequence(2));
 

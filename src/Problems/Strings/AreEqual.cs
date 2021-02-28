@@ -11,9 +11,7 @@ namespace Problems.Strings
         public static bool AreEqual(string s, string t)
         {
             var resultS = Transform(s);
-            Console.WriteLine(resultS);
             var resultT = Transform(t);
-            Console.WriteLine(resultT);
             return resultS == resultT;
         }
 
