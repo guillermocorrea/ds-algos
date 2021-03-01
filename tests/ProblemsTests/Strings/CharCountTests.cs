@@ -7,6 +7,7 @@ namespace ProblemsTests.Strings
 {
     public class CharCountTests
     {
+        [Fact]
         public void ShouldFindSolution()
         {
             // Give
@@ -19,7 +20,9 @@ namespace ProblemsTests.Strings
                  {'i', 1},
                  {'t', 1},
                  {'e', 2},
-                 {'r', 1}
+                 {'r', 1},
+                 {'1', 2},
+                 {'2', 2}
             };
             Assert.Equal(result, expected);
         }
