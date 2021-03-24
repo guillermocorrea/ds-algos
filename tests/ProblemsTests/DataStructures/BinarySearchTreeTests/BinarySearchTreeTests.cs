@@ -50,5 +50,195 @@ namespace ProblemsTests.DataStructures.BinarySearchTreeTests
             Assert.Equal(new List<int>() { 3, 6, 8, 10, 15, 20 }, inorderResult);
             Assert.Equal(new List<int>() { 3, 8, 6, 20, 15, 10 }, postorderResult);
         }
+
+        [Fact]
+        public void MaximunDepth()
+        {
+            // Given
+            var bst = new BinarySearchTree<int>();
+            bst.Insert(10);
+            bst.Insert(15);
+            bst.Insert(6);
+            bst.Insert(9);
+            bst.Insert(3);
+            bst.Insert(4);
+            bst.Insert(5);
+
+            //          10
+            //      6       15
+            //    3   9        
+            //      4
+            //        5      
+
+            var result = bst.MaximunDepth();
+            Assert.Equal(5, result);
+
+            var expected = new List<List<int>>()
+            {
+                new List<int>() {10},
+                new List<int>() {6, 15},
+                new List<int>() {3, 9},
+                new List<int>() {4},
+                new List<int>() {5},
+            };
+            var resultLevelOrder = bst.LevelOrder();
+            Assert.Equal(expected, resultLevelOrder);
+        }
+
+        [Fact]
+        public void RightSideViewOfTree()
+        {
+            // Given
+            var bst = new BinarySearchTree<int>();
+            bst.Insert(10);
+            bst.Insert(15);
+            bst.Insert(17);
+            bst.Insert(6);
+            bst.Insert(9);
+            bst.Insert(3);
+            bst.Insert(4);
+            bst.Insert(5);
+
+            //          10
+            //      6       15
+            //    3   9        17
+            //      4
+            //        5      
+
+            var expected = new List<int>()
+            {
+                10, 15, 17, 4, 5
+            };
+            var result = bst.RightSideViewOfTree();
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void RightSideViewOfTreeDFS()
+        {
+            // Given
+            var bst = new BinarySearchTree<int>();
+            bst.Insert(10);
+            bst.Insert(15);
+            bst.Insert(17);
+            bst.Insert(6);
+            bst.Insert(9);
+            bst.Insert(3);
+            bst.Insert(4);
+            bst.Insert(5);
+
+            //          10
+            //      6       15
+            //    3   9        17
+            //      4
+            //        5      
+
+            var expected = new List<int>()
+            {
+                10, 15, 17, 4, 5
+            };
+            var result = bst.RightSideViewOfTreeDFS();
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void IsValidBST()
+        {
+            // Given
+            var bst = new BinarySearchTree<int>();
+            bst.Insert(10);
+            bst.Insert(15);
+            bst.Insert(17);
+            bst.Insert(6);
+            bst.Insert(9);
+            bst.Insert(3);
+            bst.Insert(4);
+            bst.Insert(5);
+
+            //          10
+            //      6       15
+            //    3   9        17
+            //      4
+            //        5      
+
+            var result = bst.IsValidBST();
+            Assert.Equal(true, result);
+        }
+
+        [Fact]
+        public void InvalidBST()
+        {
+            // Given
+            var bst = new BinarySearchTree<int>();
+            bst.Insert(10);
+            bst.Insert(15);
+            bst.Insert(17);
+            bst.Insert(6);
+            bst.Insert(9);
+            bst.Insert(3);
+            bst.Insert(4);
+            bst.Insert(5);
+            var fifteenNode = bst.Search(15);
+            fifteenNode.Left = new BinaryTreeNode<int>(8);
+
+            //          10
+            //      6       15
+            //    3   9   8    17
+            //      4
+            //        5      
+
+            var result = bst.IsValidBST();
+            Assert.Equal(false, result);
+        }
+
+        [Fact]
+        public void IsValidBSTRecursive()
+        {
+            // Given
+            var bst = new BinarySearchTree<int>();
+            bst.Insert(10);
+            bst.Insert(15);
+            bst.Insert(17);
+            bst.Insert(6);
+            bst.Insert(9);
+            bst.Insert(3);
+            bst.Insert(4);
+            bst.Insert(5);
+
+            //          10
+            //      6       15
+            //    3   9        17
+            //      4
+            //        5      
+
+            var result = bst.IsValidBSTRecursive(int.MinValue, int.MaxValue);
+            Assert.Equal(true, result);
+        }
+
+        [Fact]
+        public void InvalidBSTRecursive()
+        {
+            // Given
+            var bst = new BinarySearchTree<int>();
+            bst.Insert(10);
+            bst.Insert(15);
+            bst.Insert(17);
+            bst.Insert(6);
+            bst.Insert(9);
+            bst.Insert(3);
+            bst.Insert(4);
+            bst.Insert(5);
+            var fifteenNode = bst.Search(15);
+            fifteenNode.Left = new BinaryTreeNode<int>(8);
+
+            //          10
+            //      6       15
+            //    3   9   8    17
+            //      4
+            //        5      
+
+            var result = bst.IsValidBSTRecursive(int.MinValue, int.MaxValue);
+            Assert.Equal(false, result);
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace ProblemsTests.Strings
             // When
             var result = IsPalindromeSolution.IsPalindrome(str);
             // Then
-            Assert.Equal(true, result);
+            Assert.True(result);
         }
     }
 }
