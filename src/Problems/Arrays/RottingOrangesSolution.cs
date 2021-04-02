@@ -34,41 +34,45 @@ namespace Problems.Arrays
             }
 
             var visited = new HashSet<string>();
+            int qLength = rottenOrangesQueue.Count;
             while (rottenOrangesQueue.Count > 0)
             {
-                var currentMinuteQueue = new Queue<(int Row, int Col)>(rottenOrangesQueue);
-                while (currentMinuteQueue.Count > 0)
+                var (currRow, currCol) = rottenOrangesQueue.Dequeue();
+                visited.Add(GetKey(currRow, currCol));
+                if (currRow - 1 >= 0 && grid[currRow - 1][currCol] == 1 && !visited.Contains(GetKey(currRow - 1, currCol)))
                 {
-                    var (currRow, currCol) = currentMinuteQueue.Dequeue();
-                    grid[currRow][currCol] = 2;
-                    visited.Add(GetKey(currRow, currCol));
-                    rottenOrangesQueue.Dequeue();
-                    if (currRow - 1 >= 0 && grid[currRow - 1][currCol] == 1 && !visited.Contains(GetKey(currRow - 1, currCol)))
-                    {
-                        oranges--;
-                        rottenOrangesQueue.Enqueue((currRow - 1, currCol));
-                        visited.Add(GetKey(currRow - 1, currCol));
-                    }
-                    if (currCol + 1 < grid[currRow].Length && grid[currRow][currCol + 1] == 1 && !visited.Contains(GetKey(currRow, currCol + 1)))
-                    {
-                        oranges--;
-                        rottenOrangesQueue.Enqueue((currRow, currCol + 1));
-                        visited.Add(GetKey(currRow, currCol + 1));
-                    }
-                    if (currRow + 1 < grid.Length && grid[currRow + 1][currCol] == 1 && !visited.Contains(GetKey(currRow + 1, currCol)))
-                    {
-                        oranges--;
-                        rottenOrangesQueue.Enqueue((currRow + 1, currCol));
-                        visited.Add(GetKey(currRow + 1, currCol));
-                    }
-                    if (currCol - 1 >= 0 && grid[currRow][currCol - 1] == 1 && !visited.Contains(GetKey(currRow, currCol - 1)))
-                    {
-                        oranges--;
-                        rottenOrangesQueue.Enqueue((currRow, currCol - 1));
-                        visited.Add(GetKey(currRow, currCol - 1));
-                    }
+                    oranges--;
+                    grid[currRow - 1][currCol] = 2;
+                    rottenOrangesQueue.Enqueue((currRow - 1, currCol));
+                    visited.Add(GetKey(currRow - 1, currCol));
                 }
-                minutes++;
+                if (currCol + 1 < grid[currRow].Length && grid[currRow][currCol + 1] == 1 && !visited.Contains(GetKey(currRow, currCol + 1)))
+                {
+                    oranges--;
+                    grid[currRow][currCol + 1] = 2;
+                    rottenOrangesQueue.Enqueue((currRow, currCol + 1));
+                    visited.Add(GetKey(currRow, currCol + 1));
+                }
+                if (currRow + 1 < grid.Length && grid[currRow + 1][currCol] == 1 && !visited.Contains(GetKey(currRow + 1, currCol)))
+                {
+                    oranges--;
+                    grid[currRow + 1][currCol] = 2;
+                    rottenOrangesQueue.Enqueue((currRow + 1, currCol));
+                    visited.Add(GetKey(currRow + 1, currCol));
+                }
+                if (currCol - 1 >= 0 && grid[currRow][currCol - 1] == 1 && !visited.Contains(GetKey(currRow, currCol - 1)))
+                {
+                    oranges--;
+                    grid[currRow][currCol - 1] = 2;
+                    rottenOrangesQueue.Enqueue((currRow, currCol - 1));
+                    visited.Add(GetKey(currRow, currCol - 1));
+                }
+
+                if (--qLength == 0)
+                {
+                    qLength = rottenOrangesQueue.Count;
+                    minutes++;
+                }
                 if (oranges == 0) break;
             }
 

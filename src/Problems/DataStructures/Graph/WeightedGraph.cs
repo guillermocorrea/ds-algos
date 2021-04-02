@@ -25,10 +25,10 @@ namespace Problems.DataStructures.Graph
             {
                 AdjacencyList[vertex1].Add(new Edge<T>(vertex2, weight));
             }
-            if (AdjacencyList.ContainsKey(vertex2))
-            {
-                AdjacencyList[vertex2].Add(new Edge<T>(vertex1, weight));
-            }
+            // if (AdjacencyList.ContainsKey(vertex2))
+            // {
+            //     AdjacencyList[vertex2].Add(new Edge<T>(vertex1, weight));
+            // }
         }
 
         public IEnumerable<T> ShortestPath(T start, T end)
