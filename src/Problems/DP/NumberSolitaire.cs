@@ -64,7 +64,7 @@ class Solution { public int solution(int[] A); }
     {
         public static int Solve(int[] A)
         {
-
+            throw new NotImplementedException();
         }
     }
 }

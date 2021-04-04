@@ -49,6 +49,10 @@ namespace ProblemsTests.DataStructures.BinarySearchTreeTests
             Assert.Equal(new List<int>() { 10, 6, 3, 8, 15, 20 }, preorderResult);
             Assert.Equal(new List<int>() { 3, 6, 8, 10, 15, 20 }, inorderResult);
             Assert.Equal(new List<int>() { 3, 8, 6, 20, 15, 10 }, postorderResult);
+
+            // Height
+            var height = bst.GetHeight();
+            Assert.Equal(2, height);
         }
 
         [Fact]

@@ -34,7 +34,6 @@ namespace ProblemsTests.DataStructures.Graph
             graph.AddEdge("E", "F", 1);
 
             var shortestPath = graph.ShortestPath("A", "E");
-            Console.ReadKey();
             // graph.AddEdge("Madrid", "Cali");
 
             // graph.RemoveEdge("Madrid", "Brisbane");

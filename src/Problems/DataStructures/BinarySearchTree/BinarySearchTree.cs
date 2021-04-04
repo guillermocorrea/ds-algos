@@ -39,6 +39,18 @@ namespace Problems.DataStructures.BinarySearchTree
             return visited;
         }
 
+        public int GetHeight()
+        {
+            if (_root == null) return 0;
+            return GetHeightRecursive(_root) - 1; // -1 removes the root counter
+        }
+
+        private int GetHeightRecursive(BinaryTreeNode<T> node)
+        {
+            if (node == null) return 0;
+            return (1 + Math.Max(GetHeightRecursive(node.Left), GetHeightRecursive(node.Right)));
+        }
+
         #region DFS
         /// <summary>
         /// Root, Left, Right
@@ -87,7 +99,7 @@ namespace Problems.DataStructures.BinarySearchTree
         }
 
         /// <summary>
-        /// Root, Left, Right
+        /// Left, Right, Root
         /// </summary>
         /// <returns></returns>
         public IEnumerable<T> PostorderTraversal()
