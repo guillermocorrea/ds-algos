@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Problems.InterfaceDesign
 {
@@ -14,56 +12,44 @@ namespace Problems.InterfaceDesign
 
     public class Monarchy : IMonarchy
     {
-        private readonly string _monarch;
-        private readonly Tree _tree;
+        private readonly Person _monarch;
+        private readonly Dictionary<string, Person> _people;
 
         public Monarchy(string monarch)
         {
-            _monarch = monarch ?? throw new ArgumentNullException(nameof(monarch));
-            _tree = new Tree(monarch);
+            _ = monarch ?? throw new ArgumentNullException(nameof(monarch));
+            _monarch = new Person(monarch);
+            _people = new Dictionary<string, Person>();
+            _people[monarch] = _monarch;
         }
 
         public void Birth(string child, string parent)
         {
-            var findResult = _tree.Find(parent);
-            if (findResult == null) return;
-            findResult.Value.Node.Children.Add(new TreeNode(child));
+            if (!_people.ContainsKey(parent)) return;
+            var parentRef = _people[parent];
+            var newBorn = new Person(child);
+            parentRef.Children.Add(newBorn);
+            _people[child] = newBorn;
         }
 
         public void Death(string name)
         {
-            var findResult = _tree.Find(name);
-            if (findResult == null) return;
-            var (node, parent) = findResult.Value;
-            if (parent == null)
-            {
-                var children = node.Children;
-                if (children.Count > 0)
-                {
-                    var newRoot = children[0];
-                    children.RemoveAt(0);
-                    newRoot.Children.AddRange(children);
-                    _tree.Root = newRoot;
-                }
-            }
-            else
-            {
-                parent.Children.InsertRange(0, node.Children);
-                parent.Children.Remove(node);
-            }
+            if (!_people.ContainsKey(name)) return;
+            var person = _people[name];
+            person.IsAlive = false;
         }
 
         public List<string> GetOrderOfSuccession()
         {
             List<string> result = new List<string>();
-            GetOrderOfSuccessionRecursive(_tree.Root, result);
+            GetOrderOfSuccessionRecursive(_monarch, result);
             return result;
         }
 
-        private void GetOrderOfSuccessionRecursive(TreeNode current, List<string> result)
+        private void GetOrderOfSuccessionRecursive(Person current, List<string> result)
         {
-            if (current == null) return;
-            result.Add(current.Data);
+            if (current.IsAlive)
+                result.Add(current.Name);
             foreach (var child in current.Children)
             {
                 GetOrderOfSuccessionRecursive(child, result);
@@ -71,40 +57,16 @@ namespace Problems.InterfaceDesign
         }
     }
 
-    class Tree
+    class Person
     {
-        public TreeNode Root { get; set; }
-        public Tree(string monarch)
+        public string Name { get; set; }
+        public bool IsAlive { get; set; }
+        public List<Person> Children { get; set; }
+        public Person(string name)
         {
-            Root = new TreeNode(monarch);
-        }
-
-        public (TreeNode Node, TreeNode Parent)? Find(string data)
-        {
-            return FindRecursive(Root, null, data);
-        }
-        private (TreeNode Node, TreeNode Parent)? FindRecursive(TreeNode current, TreeNode parent, string data)
-        {
-            if (current == null) return null;
-            if (current.Data == data) return (current, parent);
-            foreach (var child in current.Children)
-            {
-                var childResult = FindRecursive(child, current, data);
-                if (childResult != null)
-                    return childResult;
-            }
-            return null;
-        }
-    }
-
-    class TreeNode
-    {
-        public string Data { get; set; }
-        public List<TreeNode> Children { get; set; }
-        public TreeNode(string data)
-        {
-            Data = data;
-            Children = new List<TreeNode>();
+            Name = name;
+            Children = new List<Person>();
+            IsAlive = true;
         }
     }
 }
